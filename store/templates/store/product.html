@@ -1,0 +1,18 @@
+{% extends 'store/navbar.html' %}
+{% load static %}
+{% block content %}
+
+
+			<p>{{product.name}}</p>
+			<span> {{ product.genderCategory }} {{ product.seasonCategory }}</span>
+			<p class="rtlPrcSl">Price: ${{ product.rtlPrice }}</p>
+			<p class="slPrc">Now Only: ${{ product.slPrice }}</p>
+			<a href="#" class="btn btn-primary">Add to Cart</a> <br>
+<img src="{{ product.image1.url }}" alt="none">
+
+
+<!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+
+
+{% endblock %}
+

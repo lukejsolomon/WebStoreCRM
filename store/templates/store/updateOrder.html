@@ -1,0 +1,68 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+   <div class="col-lg-6">
+      <div class="box-element product">
+         <h5>This is the updateOrder page.  It contains everything we need to ship the product.  The user can update the status and enter tracking infomation.</h5>
+         {% for item in address.order.orderitem_set.all %}
+         <hr>
+         <div class="cart-row">
+            <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+            <div style="flex:2">
+               <p>{{item.product.name}}</p>
+            </div>
+            <div style="flex:1">
+               <p>${{item.product.price|floatformat:2}}</p>
+            </div>
+            <div style="flex:1">
+               <p>x{{item.quantity}}</p>
+            </div>
+         </div>
+         {% endfor %}
+         <h5>Items:   {{address.order.get_cart_items}}</h5>
+         <h5>Total:   ${{address.order.get_cart_total|floatformat:2}}</h5>
+         <hr>
+      </div>
+   </div>
+   <div class="col-lg-6">
+      <div class="box-element product">
+         <h6>Order Number:<strong>{{ address.order }}</strong></h6>
+         <h6> Ship to: {{ address.customer }}</h6>
+         <p>{{ address.address }}</p>
+         <p> {{ address.city }}</p>
+         <p> {{ address.state }}</p>
+         <p> {{ address.zipcode }}</p>
+         <form id="form" action="" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            {% if field.name == 'status' %}
+            <div id="user-info">
+               <div class="form-field">
+                  {{ field.label_tag }}
+                  <ul style="list-style:none">
+                     {% for checkbox in field %}
+                     <li>
+                        <label for="{{ checkbox.id_for_label }}">
+                        {{ checkbox.tag }}
+                        {{ checkbox.choice_label }}
+                        </label>
+                     </li>
+                     {% endfor %}
+                  </ul>
+               </div>
+            </div>
+            {% else %}
+            <div id="user-info">
+               <div class="form-field">
+                  {{ field }}
+               </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <input id="form-button" class="btn btn-success btn-block" type="submit" value="Update">
+         </form>
+      </div>
+   </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,50 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<h5>        Welcome to the CRM section.  If you just placed a mock order, it will show up here.   <hr>
+</h5>
+<div class="row">
+    <div class="col-lg-4"> 
+
+<h5 style="color: red;">If this were a real website, we would never allow the public to view this section, we would protect it with authentication. 
+</h5>
+        <h5> The <a href="{% url 'service' %}">service</a> section shows detailed product information such as price points.
+        </h5>
+        <h5>The <a href="{% url 'shipping' %}">shipping</a>
+            section is designed so that a user can find the product in a warehouse and then ship it to the customer. 
+
+
+
+        </h5>
+
+ 
+    
+    </div>
+    {% for i in address %}
+    <div class="col-lg-4">
+
+        <div class="box-element product">
+            <h6>Order Status: <strong>{{ i.status }}</strong></h6>
+            <h6>Order Number:<strong>{{ i.order }}</strong></h6>
+            <hr>
+            {% for item in i.orderItem.all %}
+            <h6>Product Location:<strong>{{ item.product.location }}</strong></h6>
+            
+            <h6>Product:<strong>{{ item.product }}</strong></h6>
+            <hr>
+
+            {% endfor %}
+            Ship to:
+         <h6>{{ i.customer }}</h6>
+            <p>{{ i.address }}</p>
+            <p> {{ i.city }}</p>
+            <p> {{ i.state }}</p>
+            <p> {{ i.zipcode }}</p>
+            <a class="btn btn-sm btn-warning" href="{% url 'updateOrder' i.id %}">Ship</a>
+            <a class="btn btn-sm btn-info" href="{% url 'serviceOrder' i.id %}">Service</a>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

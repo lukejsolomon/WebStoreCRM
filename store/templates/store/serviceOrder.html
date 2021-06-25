@@ -1,0 +1,79 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<h5>This section has detailed product information.  The user can see a manufacturer description as well as different price points.  They can also cancel the order.  </h5>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="box-element product">
+            <h5>Order Infomation</h5>
+            <h6>Order Number:<strong>{{ address.order }}</strong></h6>
+            <h6>Order Status: <strong>{{ address.status }}</strong></h6>
+				{% for item in address.order.orderitem_set.all %}
+				<div class="cart-row">
+					<div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+					<div style="flex:2"><p>{{item.product.name}}</p></div>
+					<div style="flex:1"><p>${{item.product.price|floatformat:2}}</p></div>
+					<div style="flex:1"><p>x{{item.quantity}}</p></div>
+				</div>
+                <div style="flex:2"><p><strong>{{item.product.name}}</strong></p></div>
+                <p>Description :<strong>{{ item.product.description }}</strong></p>
+                <form id="form" action="" method="post">{% csrf_token %}
+                    {% for field in form %}
+                        {% if field.name == 'status' %}
+                        <div id="user-info">
+                            <div class="form-field">
+                                {{ field.label_tag }}
+                                <ul style="list-style:none">
+                                {% for checkbox in field %}
+                                <li>
+                                    <label for="{{ checkbox.id_for_label }}">
+                                        {{ checkbox.tag }}
+                                        {{ checkbox.choice_label }}
+                                    </label>    
+                            </li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div id="user-info">
+                            <div class="form-field">
+                                {{ field }}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    <hr>
+                    <input id="form-button" class="btn btn-success btn-block" type="submit" value="Update">
+                </form>
+            </div>
+        </div>
+        
+        
+        <div class="col-lg-6">
+            <div class="box-element product">
+                <h5>Product Infomation</h5>
+
+                <span>Price:<strong>{{ item.product.price }}0</strong></span>
+                <span>Sale Price:<strong>{{ item.product.slPrice }}0</strong></span>
+                <span>Lowest Price:<strong>{{ item.product.lwstPrice }}0</strong></span>
+                <span>Cost:<strong>{{ item.product.cost }}0</strong></span>
+<br>
+                <span>Gender :<strong>{{ item.product.genderCategory }}</strong></span>
+                <span>Season :<strong>{{ item.product.seasonCategory }}</strong></span>
+                <hr>
+                <p>Manufacturer Description :<strong>{{ item.product.mnfDscptn }}</strong></p>
+                {% endfor %}
+            <hr>
+         
+
+        </div>
+    </div>
+
+         
+        </div>
+
+
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<h4>This section is designed so that a user can find the product in a warehouse and ship it to the customer.  </h4>
+<div class="row">
+    {% for i in address %}
+    <div class="col-lg-4">
+
+        <div class="box-element product">
+            <h6>Order Status: <strong>{{ i.status }}</strong></h6>
+            <h6>Order Number:<strong>{{ i.order }}</strong></h6>
+            <hr>
+            {% for item in i.orderItem.all %}
+            <h6>Product Location:<strong>{{ item.product.location }}</strong></h6>
+            
+            <h6>Product:<strong>{{ item.product }}</strong></h6>
+            <hr>
+
+            {% endfor %}
+            Ship to:
+         <h6>{{ i.customer }}</h6>
+            <p>{{ i.address }}</p>
+            <p> {{ i.city }}</p>
+            <p> {{ i.state }}</p>
+            <p> {{ i.zipcode }}</p>
+            <a class="btn btn-sm btn-warning" href="{% url 'updateOrder' i.id %}">Ship</a>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
