@@ -158,7 +158,7 @@ def processOrder(request):
 def orders(request):
     order = Order.objects.all()
     item = OrderItem.objects.all()
-    address = ShippingAddress.objects.all()
+    address = ShippingAddress.objects.order_by('-date_added')
     context = {'order':order, 'address': address, 'item':item}
     return render(request, 'store/orders.html', context)
 
@@ -166,7 +166,7 @@ def orders(request):
 def shipping(request):
     order = Order.objects.all()
     item = OrderItem.objects.all()
-    address = ShippingAddress.objects.filter(status='Pending')
+    address = ShippingAddress.objects.filter(status='Pending').order_by('-date_added')
     context = {'order':order, 'address': address, 'item':item}
     return render(request, 'store/shipping.html', context)
 
@@ -202,6 +202,6 @@ def serviceOrder(request, pk):
 def service(request):
     order = Order.objects.all()
     item = OrderItem.objects.all()
-    address = ShippingAddress.objects.all()
+    address = ShippingAddress.objects.all().order_by('-date_added')
     context = {'order':order, 'address': address, 'item':item}
     return render(request, 'store/service.html', context)

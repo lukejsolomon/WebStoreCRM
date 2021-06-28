@@ -9,6 +9,13 @@ body{
 .navbar {
 	background-color: black;
 }
+
+.navbar-brandR {
+
+	margin-right: auto;
+}
+
+
 .nav-link{
 	color: burlywood;
 
@@ -16,8 +23,23 @@ body{
 .nav-linkR{
 	color:palevioletred;
 
-
 }
+
+.navbar-toggler-icon {
+	background-color: white;
+	color: burlywood;
+	width: 5rem;
+	
+}
+
+.navbar-toggler-iconC {
+	background-color: white;
+	color: black;
+	width: 5rem;
+	
+}
+
+
 h1,h2,h3,h4,h5,h6{
 	color:hsl(0, 0%, 30%);
 }
